@@ -13,6 +13,7 @@ let artikli = []
 function kreirajRed() {
 
     let tabela = document.querySelector("#artikli")
+    tabela.innerHTML = ""
 
     for (let i = 0; i < artikli.length; i++) {
         let tr = document.createElement("tr")
@@ -46,15 +47,31 @@ function prikazDetalja(artikal) {
     document.querySelector("#detaljOpis").textContent = "Opis: " + artikal.opis
 }
 
+function popunjavanjeForme() {
+    let submitBtn = document.querySelector('#submitBtn')
+    submitBtn.addEventListener('click', function () { 
+        const forma = document.querySelector('#formaZaDodavanje')
+        const formData = new FormData(forma) 
+        const naziv = formData.get('naziv')
+        const cena = formData.get('cena')
+        const opis = formData.get('opis')
+
+        const noviArtikal = new Artikal(naziv, cena, opis)
+        artikli.push(noviArtikal)
+
+        kreirajRed()
+    })
+}
 
 
 function inicijalizujArtikle() {
     artikli = [
         new Artikal('Monitor', 165, '23.8" IPS ekran sa širokim uglovima gledanja (178°)'),
         new Artikal('Mis', 20, 'Bežični, optički'),
-        new Artikal("TV",650, "Rezolucija: 4K Ultra HD 3840 x 2160p")
+        new Artikal("TV", 650, "Rezolucija: 4K Ultra HD 3840 x 2160p")
     ]
     kreirajRed()
+    popunjavanjeForme()
 }
 
 document.addEventListener('DOMContentLoaded', inicijalizujArtikle)
